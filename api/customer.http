@@ -1,0 +1,51 @@
+### Create customer
+POST http://localhost:8000/customers HTTP/1.1
+Host: localhost:8000
+Content-Type: application/json
+
+{
+    "id":"b1",
+    "name": "b1",
+    "role": "b1",
+    "email": "email",
+    "phone": "phone",
+    "contacted": false
+}
+
+### Create customer
+POST http://localhost:8000/customers HTTP/1.1
+Host: localhost:8000
+Content-Type: application/json
+
+{
+  "name": "b1",
+  "role": "b1",
+  "email": "email",
+  "phone": "phone",
+  "contacted": false
+}
+
+### List All
+GET http://localhost:8000/customers HTTP/1.1
+Host: localhost:8000
+Content-Type: application/json
+
+
+### Get Customers by Id
+GET http://localhost:8000/customers/b1 HTTP/1.1
+Host: localhost:8000
+Content-Type: application/json
+
+
+### Update
+DELETE http://localhost:8000/customers/11 HTTP/1.1
+Host: localhost:8000
+Content-Type: application/json
+
+{
+  "name": "update b1",
+  "role": "update b1",
+  "email": "update",
+  "phone": "update",
+  "contacted": true
+}
