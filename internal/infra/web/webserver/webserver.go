@@ -2,6 +2,7 @@ package webserver
 
 import (
 	"net/http"
+	"strings"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
@@ -53,5 +54,29 @@ func (s *WebServer) Start() {
 			panic("Método HTTP não suportado: " + request.Method)
 		}
 	}
-	http.ListenAndServe(s.WebServerPort, s.Router)
+
+	// Serve static files
+	staticDir := "./static"
+	FileServer(s.Router, "/static", http.Dir(staticDir))
+
+	// Default route
+	s.Router.Get("/", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, staticDir+"/index.html")
+	})
+
+	err := http.ListenAndServe(s.WebServerPort, s.Router)
+	if err != nil {
+		panic(err)
+	}
+}
+
+// FileServer is a utility for serving static files
+func FileServer(r chi.Router, path string, root http.FileSystem) {
+	if strings.ContainsAny(path, "{}*") {
+		panic("FileServer does not permit any URL parameters.")
+	}
+	fs := http.StripPrefix(path, http.FileServer(root))
+	r.Get(path, func(w http.ResponseWriter, r *http.Request) {
+		fs.ServeHTTP(w, r)
+	})
 }

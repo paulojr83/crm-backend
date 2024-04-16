@@ -1,0 +1,1 @@
+delete from customers where id in("d2035ca9-a0da-497e-9836-d5c863a6c351", "572bb7e0-6e88-4c0c-aaca-40e1636cd07b", "b2a5f9db-bd9c-4715-97b7-fd41e0db2981")

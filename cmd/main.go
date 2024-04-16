@@ -22,13 +22,13 @@ func main() {
 	defer db.Close()
 
 	webserver := webserver.NewWebServer(config.WebServerPort)
-	webOrderHandler := NewWebCustomerHandler(db)
+	webCustomerHandler := NewWebCustomerHandler(db)
 
-	webserver.AddHandler("POST", "/customers", webOrderHandler.AddCustomer)
-	webserver.AddHandler("GET", "/customers", webOrderHandler.GetCustomers)
-	webserver.AddHandler("GET", "/customers/{id}", webOrderHandler.GetCustomer)
-	webserver.AddHandler("PUT", "/customers/{id}", webOrderHandler.UpdateCustomer)
-	webserver.AddHandler("DELETE", "/customers/{id}", webOrderHandler.DeleteCustomer)
+	webserver.AddHandler("POST", "/customers", webCustomerHandler.AddCustomer)
+	webserver.AddHandler("GET", "/customers", webCustomerHandler.GetCustomers)
+	webserver.AddHandler("GET", "/customers/{id}", webCustomerHandler.GetCustomer)
+	webserver.AddHandler("PUT", "/customers/{id}", webCustomerHandler.UpdateCustomer)
+	webserver.AddHandler("DELETE", "/customers/{id}", webCustomerHandler.DeleteCustomer)
 
 	fmt.Println("Starting web server on port", config.WebServerPort)
 	webserver.Start()

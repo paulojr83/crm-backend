@@ -61,6 +61,40 @@
       updateCustomer()
       deleteCustomer()
 
+## External dependencies
+## go-chi
+[README](https://go-chi.io/#/README)
+
+_chi_ is a lightweight, idiomatic and composable router for building Go HTTP services. It's especially good at helping you write large REST API services that are kept maintainable as your project grows and changes. chi is built on the new context package introduced in Go 1.7 to handle signaling, cancelation and request-scoped values across a handler chain.
+
+     $ go get -u github.com/go-chi/chi/v5
+
+## Viper
+[Github](https://github.com/spf13/viper)
+### What is Viper?
+Viper is a complete configuration solution for Go applications including 12-Factor apps. It is designed to work within an application, and can handle all types of configuration needs and formats. It supports:
+* setting defaults
+* reading from JSON, TOML, YAML, HCL, envfile and Java properties config files
+* live watching and re-reading of config files (optional)
+* reading from environment variables
+* reading from remote config systems (etcd or Consul), and watching changes
+* reading from command line flags
+* reading from buffer
+* setting explicit values
+
+## wire
+[Document](https://pkg.go.dev/github.com/google/wire#section-readme)
+
+[Doc Install](https://pkg.go.dev/github.com/google/wire#readme-installing)
+
+[Github wire](https://github.com/google/wire)
+
+* Wire is a code generation tool that automates connecting components using dependency injection
+
+* Now we run go generate to execute wire:
+
+      $ go generate
+
 ## Migrate
 [Github](https://github.com/golang-migrate/migrate?tab=readme-ov-file#cli-usage)
 
@@ -85,7 +119,11 @@
     $ migrate -path=sql/migrations -database "mysql://root:root@tcp(localhost:3306)/crm" -verbose up
     $ migrate -path=sql/migrations -database "mysql://root:root@tcp(localhost:3306)/crm" -verbose down
 
+## Seeds
+    $ migrate create -ext sql -dir sql/migrations -seq seed_data
+
+
 
 ## Run go main
     $ docker-compose up -d
-    $ go run .\main.go .\wire_gen.go
+    $ go run .\cmd\main.go .\cmd\wire_gen.go

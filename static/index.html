@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Udacity Project: CRM Backend</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            color: #333;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        h1 {
+            color: #008080;
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #4CAF50;
+            margin-top: 30px;
+            margin-bottom: 10px;
+        }
+
+        h3 {
+            color: #2196F3;
+            margin-top: 25px;
+            margin-bottom: 5px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        pre {
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        a {
+            color: #2196F3;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .example-request {
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+<h1>Udacity Project: CRM Backend</h1>
+
+
+<h2>Data</h2>
+<ul>
+    <li>Success Criteria
+        <ul>
+            <li>Create a Customer struct</li>
+            <li>Create a mock "database" to store customer data</li>
+            <li>Seed the database with initial customer data</li>
+            <li>Assign unique IDs to customers in the database</li>
+        </ul>
+    </li>
+    <li>Specifications
+        <ul>
+            <li>Each customer includes: ID, Name, Role, Email, Phone, Contacted</li>
+            <li>Data is mapped to logical, appropriate types</li>
+            <li>Customers are stored appropriately in a basic data structure</li>
+            <li>The "database" data structure is non-empty</li>
+            <li>Customers in the database have unique ID values</li>
+        </ul>
+    </li>
+</ul>
+
+<h2>Server</h2>
+<ul>
+    <li>Success Criteria
+        <ul>
+            <li>Serve the API locally</li>
+        </ul>
+    </li>
+    <li>The application handles the following 5 operations for customers in the "database":
+        <ul>
+            <li>Getting a single customer through a /customers/{id} path</li>
+            <li>Getting all customers through a the /customers path</li>
+            <li>Creating a customer through a /customers path</li>
+            <li>Updating a customer through a /customers/{id} path</li>
+            <li>Deleting a customer through a /customers/{id} path</li>
+        </ul>
+    </li>
+</ul>
+
+<h2>Migrate</h2>
+<p>For more information on migrating, visit <a href="https://github.com/golang-migrate/migrate?tab=readme-ov-file#cli-usage" target="_blank">Github</a>.</p>
+<h3>Install on Windows</h3>
+<pre>
+$ scoop install migrate
+    </pre>
+<h3>Install on Ubuntu</h3>
+<pre>
+$ curl -s https://packagecloud.io/install/repositories/golang-migrate/migrate/script.deb.sh | sudo bash
+$ sudo apt-get update
+$ sudo apt-get install migrate
+    </pre>
+<h3>Create Migration</h3>
+<pre>
+$ migrate create -ext=sql -dir=sql/migrations -seq init
+$ migrate -path=sql/migrations -database "mysql://root:root@tcp(localhost:3306)/crm" -verbose up
+$ migrate -path=sql/migrations -database "mysql://root:root@tcp(localhost:3306)/crm" -verbose down
+    </pre>
+<h2>Seeds</h2>
+<pre>
+$ migrate create -ext sql -dir sql/migrations -seq seed_data
+    </pre>
+<h2>Run Go Main</h2>
+<pre>
+$ docker-compose up -d
+$ go run .\cmd\main.go .\cmd\wire_gen.go
+    </pre>
+
+<div class="example-request">
+    <h3>Create Customer</h3>
+    <pre>
+POST http://localhost:8000/customers HTTP/1.1
+Host: localhost:8000
+Content-Type: application/json
+
+{
+    "id":"b1",
+    "name": "b1",
+    "role": "b1",
+    "email": "email",
+    "phone": "phone",
+    "contacted": false
+}
+        </pre>
+</div>
+
+<h2>API Examples</h2>
+<div class="example-request">
+    <h3>List All Customers</h3>
+    <pre>
+GET http://localhost:8000/customers HTTP/1.1
+Host: localhost:8000
+Content-Type: application/json
+        </pre>
+</div>
+
+<div class="example-request">
+    <h3>Get Customer by ID</h3>
+    <pre>
+GET http://localhost:8000/customers/d2035ca9-a0da-497e-9836-d5c863a6c351 HTTP/1.1
+Host: localhost:8000
+Content-Type: application/json
+        </pre>
+</div>
+
+<div class="example-request">
+    <h3>Update Customer</h3>
+    <pre>
+PUT http://localhost:8000/customers/d2035ca9-a0da-497e-9836-d5c863a6c351 HTTP/1.1
+Host: localhost:8000
+Content-Type: application/json
+
+{
+  "name": "update",
+  "role": "update",
+  "email": "update",
+  "phone": "update",
+  "contacted": true
+}
+        </pre>
+</div>
+
+<div class="example-request">
+    <h3>Delete Customer</h3>
+    <pre>
+DELETE http://localhost:8000/customers/d2035ca9-a0da-497e-9836-d5c863a6c351 HTTP/1.1
+Host: localhost:8000
+Content-Type: application/json
+
+{
+  "name": "update",
+  "role": "update",
+  "email": "update",
+  "phone": "update",
+  "contacted": true
+}
+        </pre>
+</div>
+</body>
+
+</html>

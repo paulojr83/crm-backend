@@ -1,6 +1,7 @@
 package usecase
 
 import (
+	"errors"
 	"github.com/paulojr83/crm-backend/internal/entity"
 )
 
@@ -34,11 +35,20 @@ func NewUpdateCustomerUseCase(
 	}
 }
 
+type ErrorMessage struct {
+	Error error
+}
+
 func (c *UpdateCustomerUseCase) Execute(input UpdateCustomerInputDTO) (UpdateCustomerOutputDTO, error) {
 
 	customer, err := entity.NewCustomer(input.ID, input.Name, input.Role, input.Email, input.Phone, input.Contacted)
 	if err != nil {
 		return UpdateCustomerOutputDTO{}, err
+	}
+
+	existsCustomer, err := c.CustomerRepository.GetCustomer(input.ID)
+	if err != nil && existsCustomer.ID == "" {
+		return UpdateCustomerOutputDTO{}, errors.New("Customer not found!")
 	}
 
 	err = c.CustomerRepository.UpdateCustomer(customer)

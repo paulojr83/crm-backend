@@ -32,19 +32,32 @@ Content-Type: application/json
 
 
 ### Get Customers by Id
-GET http://localhost:8000/customers/b1 HTTP/1.1
+GET http://localhost:8000/customers/d2035ca9-a0da-497e-9836-d5c863a6c351 HTTP/1.1
 Host: localhost:8000
 Content-Type: application/json
 
 
 ### Update
-DELETE http://localhost:8000/customers/11 HTTP/1.1
+PUT http://localhost:8000/customers/d2035ca9-a0da-497e-9836-d5c863a6c351 HTTP/1.1
 Host: localhost:8000
 Content-Type: application/json
 
 {
-  "name": "update b1",
-  "role": "update b1",
+  "name": "update",
+  "role": "update",
+  "email": "update",
+  "phone": "update",
+  "contacted": true
+}
+
+### Delete Customer
+DELETE http://localhost:8000/customers/d2035ca9-a0da-497e-9836-d5c863a6c351 HTTP/1.1
+Host: localhost:8000
+Content-Type: application/json
+
+{
+  "name": "update",
+  "role": "update",
   "email": "update",
   "phone": "update",
   "contacted": true

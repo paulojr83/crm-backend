@@ -72,10 +72,16 @@ func (h *WebCustomerHandler) GetCustomer(w http.ResponseWriter, r *http.Request)
 
 	output, err := customerUseCase.Execute(dto)
 
+	if err != nil && output.ID == "" {
+		http.Error(w, "Customer not found!", http.StatusNotFound)
+		return
+	}
+
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+
 	jsonResponse, err := json.Marshal(output)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -103,8 +109,8 @@ func (h *WebCustomerHandler) UpdateCustomer(w http.ResponseWriter, r *http.Reque
 	}
 	dto.ID = id
 	customer, err := customerUseCase.Execute(dto)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+	if err != nil && customer.ID == "" {
+		http.Error(w, err.Error(), http.StatusNotFound)
 		return
 	}
 
